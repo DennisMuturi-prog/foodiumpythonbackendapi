@@ -1,11 +1,13 @@
 from enum import Enum
-from fastapi import FastAPI
-from .ML_and_Data_Science.glovo_pricing import getAllPricesInfo
-from .ML_and_Data_Science.food_recommendation import makePrediction
-from .ML_and_Data_Science.nutrient_values import populateNutrientValues
-# from ML_and_Data_Science.nutrient_values import testing
-from fastapi import HTTPException
+from fastapi import FastAPI,HTTPException
 from pydantic import BaseModel
+from .ML_and_Data_Science.nutrient_values import populateNutrientValues
+from .ML_and_Data_Science.glovo_pricing import getAllPricesInfo 
+from .ML_and_Data_Science.food_recommendation import makePrediction 
+
+
+
+
 
 class StoreName(str,Enum):
     naivas="naivas"
@@ -22,11 +24,8 @@ class RecommendationRequest(BaseModel):
 
 app=FastAPI()
 
-# @app.get("/")
-# def getItems():
-#     testingo=testing()
-#     print(testingo)
-#     return list(testingo)
+
+
 @app.get("/")
 def testing():
     return ['hello','people']
@@ -39,6 +38,7 @@ async def getPricesInfo(ingredients:PriceRequest):
     try:
         # asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
         # response= asyncio.run(main(ingredients))
+        
         response= await getAllPricesInfo(ingredients)
         return response
     except Exception as e:

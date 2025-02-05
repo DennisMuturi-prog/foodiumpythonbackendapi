@@ -9,6 +9,7 @@ WORKDIR /app
 
 RUN uv sync --frozen --no-cache
 
-EXPOSE 5000
+EXPOSE 80
+EXPOSE 443
 
 ENTRYPOINT ["/app/.venv/bin/fastapi", "run", "main.py", "--port", "5000"]
