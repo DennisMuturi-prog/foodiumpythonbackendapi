@@ -1,0 +1,25 @@
+name: Linux Container Foodium fastapi Workflow
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: copy repository
+      uses: actions/checkout@v2
+      with:
+        lfs: true
+    - name: Log in to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Build and deploy Container App
+      uses: azure/container-apps-deploy-action@v1
+      with:
+        appSourcePath: ${{ github.workspace }}
+        acrName: foodiumdockercontainers
+        containerAppName: foodiumfastapi
+        resourceGroup: NetworkWatcherRG
